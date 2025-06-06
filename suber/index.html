@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUBER - Aluguel de carros para motoristas de aplicativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e estilos gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background: #333;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #000;
+            color: #000;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            box-shadow: none;
+        }
+        
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 60px;
+            text-align: center;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            margin-right: 30px;
+        }
+        
+        .nav-item {
+            margin: 0 15px;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        
+        .nav-link:hover {
+            color: #666;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            z-index: 1002;
+        }
+        
+        /* Mobile Menu Sidebar */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu-sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100%;
+            background: #fff;
+            z-index: 1001;
+            padding: 80px 20px 40px;
+            transition: all 0.4s ease;
+            overflow-y: auto;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu-sidebar.active {
+            right: 0;
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        .mobile-nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .mobile-nav-item {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .mobile-nav-link {
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-nav-link:hover {
+            color: #000;
+            padding-left: 5px;
+        }
+        
+        .mobile-cta {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .mobile-cta .btn {
+            width: 100%;
+        }
+        
+        .mobile-social {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .mobile-social-link {
+            width: 40px;
+            height: 40px;
+            background: #f5f5f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+        
+        .mobile-social-link:hover {
+            background: #000;
+            color: #fff;
+        }
+        
+        /* Prevent body scroll when menu is open */
+        body.menu-open {
+            overflow: hidden;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            width: 50%;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .hero-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .hero-image {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 50%;
+            height: 90%;
+            background: url('https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') no-repeat;
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px 0 0 4px;
+            box-shadow: -10px 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero-shape {
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        /* Features Section */
+        .features {
+            background: #fff;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: #f9f9f9;
+            border-radius: 4px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: #000;
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .feature-desc {
+            color: #666;
+            font-size: 15px;
+        }
+        
+        /* Parallax Section */
+        .parallax {
+            position: relative;
+            height: 500px;
+            background: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80') no-repeat fixed;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .parallax::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .parallax-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .parallax-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .parallax-text {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        /* Car Options */
+        .car-options {
+            background: #f5f5f5;
+        }
+        
+        .options-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .option-card {
+            background: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .option-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .option-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .option-card:hover .option-image img {
+            transform: scale(1.1);
+        }
+        
+        .option-content {
+            padding: 30px;
+        }
+        
+        .option-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .option-desc {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .option-price {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #000;
+        }
+        
+        .option-price span {
+            font-size: 14px;
+            font-weight: 400;
+            color: #666;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            background: #fff;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 26px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: #ddd;
+            z-index: 1;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            width: 25%;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 16px;
+        }
+        
+        .step-desc {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background: #f5f5f5;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .quote-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 40px;
+            color: rgba(0, 0, 0, 0.05);
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: #000;
+            color: #fff;
+            text-align: center;
+        }
+        
+        .cta .section-title,
+        .cta .section-subtitle {
+            color: #fff;
+        }
+        
+        .cta .section-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 15px 40px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 80px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .img-logo {
+            max-width: 110px;
+        }
+
+        .footer-desc {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: #fff;
+            color: #000;
+            transform: translateY(-3px);
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #fff;
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 40px;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+            }
+            
+            .options-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 815px) {
+            .section {
+                padding: 70px 0;
+            }
+
+            .header-container {
+                padding: 20px 10px;
+            }
+            
+            .nav-list {
+                display: none;
+            }
+            
+            .btn-cadastrar {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                height: auto;
+                padding: 150px 0 100px;
+            }
+            
+            .hero-content {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .hero-subtitle {
+                margin: 0 auto 30px;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                display: none;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .steps::before {
+                display: none;
+            }
+            
+            .step {
+                width: 100%;
+                margin-bottom: 40px;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 32px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo"><img src="suber.png" alt="" class="img-logo"></a>
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#" class="nav-link">Início</a></li>
+                    <li class="nav-item"><a href="#features" class="nav-link">Vantagens</a></li>
+                    <li class="nav-item"><a href="#car-options" class="nav-link">Veículos</a></li>
+                    <li class="nav-item"><a href="#how-it-works" class="nav-link">Como Funciona</a></li>
+                </ul>
+                <a href="#cta" class="btn btn-cadastrar">Cadastre-se</a>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Sidebar -->
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-sidebar">
+        <button class="mobile-menu-close">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item"><a href="#" class="mobile-nav-link">Início</a></li>
+            <li class="mobile-nav-item"><a href="#features" class="mobile-nav-link">Vantagens</a></li>
+            <li class="mobile-nav-item"><a href="#car-options" class="mobile-nav-link">Veículos</a></li>
+            <li class="mobile-nav-item"><a href="#how-it-works" class="mobile-nav-link">Como Funciona</a></li>
+            <li class="mobile-nav-item"><a href="#testimonials" class="mobile-nav-link">Depoimentos</a></li>
+        </ul>
+        <div class="mobile-cta">
+            <a href="#cta" class="btn">Cadastre-se</a>
+        </div>
+        <div class="mobile-social">
+            <a href="#" class="mobile-social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="mobile-social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="mobile-social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="mobile-social-link"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Alugue um carro e comece a dirigir</h1>
+                <p class="hero-subtitle">Carros para motoristas de aplicativo com preços acessíveis. Sem burocracia, sem entrada e sem comprovação de renda.</p>
+                <div class="hero-btns">
+                    <a href="#car-options" class="btn">Ver Veículos</a>
+                    <a href="#how-it-works" class="btn btn-secondary">Como Funciona</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image"></div>
+        <div class="hero-shape"></div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features section">
+        <div class="container">
+            <h2 class="section-title">Por que escolher a Suber?</h2>
+            <p class="section-subtitle">Oferecemos a melhor experiência para motoristas de aplicativo que buscam alugar um veículo para trabalhar.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 class="feature-title">Sem Entrada</h3>
+                    <p class="feature-desc">Comece a dirigir sem precisar de um valor inicial. Apenas pague as diárias conforme utiliza o veículo.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Sem Burocracia</h3>
+                    <p class="feature-desc">Processo 100% digital. Aprovação rápida e sem necessidade de comprovação de renda ou fiador.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="feature-title">Carros Novos</h3>
+                    <p class="feature-desc">Frota com veículos novos e bem conservados, garantindo conforto e economia de combustível.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="feature-title">Manutenção Inclusa</h3>
+                    <p class="feature-desc">Não se preocupe com manutenção. Todos os serviços estão inclusos no valor da diária.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Seguro Completo</h3>
+                    <p class="feature-desc">Todos os veículos possuem seguro completo, garantindo tranquilidade durante o trabalho.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="feature-title">Suporte 24/7</h3>
+                    <p class="feature-desc">Equipe de suporte disponível 24 horas por dia, 7 dias por semana para ajudar com qualquer problema.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="parallax">
+        <div class="parallax-content">
+            <h2 class="parallax-title">Transforme seu futuro financeiro</h2>
+            <p class="parallax-text">Mais de 5.000 motoristas já transformaram suas vidas com a Suber. Junte-se a eles e comece a ganhar dinheiro dirigindo para aplicativos sem precisar comprar um carro.</p>
+            <a href="#cta" class="btn">Comece Agora</a>
+        </div>
+    </section>
+
+    <!-- Car Options Section -->
+    <section id="car-options" class="car-options section">
+        <div class="container">
+            <h2 class="section-title">Nossas Opções de Veículos</h2>
+            <p class="section-subtitle">Escolha entre nossa linha de carros populares ou de luxo, de acordo com sua necessidade e orçamento.</p>
+            
+            <div class="options-container">
+                <div class="option-card">
+                    <div class="option-image">
+                        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Carro Popular">
+                    </div>
+                    <div class="option-content">
+                        <h3 class="option-title">Carros Populares</h3>
+                        <p class="option-desc">Veículos econômicos e confortáveis, ideais para o dia a dia na cidade. Baixo consumo de combustível e fácil manutenção.</p>
+                        <p class="option-price">A partir de R$ 69,90 <span>/dia</span></p>
+                        <a href="#cta" class="btn">Reservar Agora</a>
+                    </div>
+                </div>
+                
+                <div class="option-card">
+                    <div class="option-image">
+                        <img src="https://images.unsplash.com/photo-1550355291-bbee04a92027?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Carro de Luxo">
+                    </div>
+                    <div class="option-content">
+                        <h3 class="option-title">Transporte de Luxo</h3>
+                        <p class="option-desc">Veículos premium para atender clientes exigentes. Ideal para categorias executivas de aplicativos e maior rentabilidade.</p>
+                        <p class="option-price">A partir de R$ 129,90 <span>/dia</span></p>
+                        <a href="#cta" class="btn">Reservar Agora</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works section">
+        <div class="container">
+            <h2 class="section-title">Como Funciona</h2>
+            <p class="section-subtitle">Alugar um carro com a Suber é simples e rápido. Siga estes passos e comece a dirigir em até 24 horas.</p>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Cadastre-se</h3>
+                    <p class="step-desc">Preencha o formulário online com seus dados básicos.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Escolha o Veículo</h3>
+                    <p class="step-desc">Selecione entre carros populares ou de luxo.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Aprovação</h3>
+                    <p class="step-desc">Análise rápida e aprovação em até 24 horas.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Retire o Carro</h3>
+                    <p class="step-desc">Busque o veículo em um de nossos pontos de retirada.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+        <div class="container">
+            <h2 class="section-title">O que dizem nossos motoristas</h2>
+            <p class="section-subtitle">Milhares de motoristas já transformaram suas vidas com a Suber. Veja alguns depoimentos.</p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"A Suber mudou minha vida. Eu não tinha dinheiro para comprar um carro, mas consegui alugar um e comecei a trabalhar como motorista de aplicativo. Em apenas 3 meses, já consegui organizar minhas finanças."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Motorista">
+                        </div>
+                        <div class="author-info">
+                            <h4>Carlos Oliveira</h4>
+                            <p>Motorista há 8 meses</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-quote-right quote-icon"></i>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"O processo foi super rápido e sem burocracia. Em 24 horas eu já estava com o carro na mão e trabalhando. A manutenção inclusa é um diferencial incrível, não me preocupo com nada."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Motorista">
+                        </div>
+                        <div class="author-info">
+                            <h4>Mariana Santos</h4>
+                            <p>Motorista há 1 ano</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-quote-right quote-icon"></i>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Comecei com um carro popular e depois de 6 meses migrei para o segmento de luxo. Minha renda aumentou significativamente e o suporte da Suber é excelente, sempre resolvem qualquer problema rapidamente."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Motorista">
+                        </div>
+                        <div class="author-info">
+                            <h4>Rafael Costa</h4>
+                            <p>Motorista há 1,5 anos</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-quote-right quote-icon"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta section">
+        <div class="container">
+            <h2 class="section-title">Comece a dirigir hoje mesmo</h2>
+            <p class="section-subtitle">Cadastre-se agora e tenha acesso a nossa frota de veículos. Processo 100% digital, rápido e sem burocracia.</p>
+            
+            <div class="cta-buttons">
+                <a href="#" class="cta-btn">Cadastre-se</a>
+                <a href="#" class="cta-btn">Fale com um consultor</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3 class="footer-logo"><img class="img-logo" src="suber.png" alt=""></h3>
+                    <p class="footer-desc">Transformando o mercado de aluguel de carros para motoristas de aplicativo com tecnologia, simplicidade e preços justos.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h3 class="footer-title">Empresa</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Sobre nós</a></li>
+                        <li><a href="#">Carreiras</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Imprensa</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h3 class="footer-title">Serviços</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Carros Populares</a></li>
+                        <li><a href="#">Transporte de Luxo</a></li>
+                        <li><a href="#">Manutenção</a></li>
+                        <li><a href="#">Seguro</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-column">
+                    <h3 class="footer-title">Suporte</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">Contato</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 SUBER. <br> Este é um site ficticio, desenvolvido pelo <a href="https://profvitorhugo.online" style="text-decoration: underline;">Prof Vitor Hugo</a> para uma disciplina.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript para funcionalidades básicas -->
+    <script>
+        // Menu mobile toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenuSidebar = document.querySelector('.mobile-menu-sidebar');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const body = document.body;
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        
+        // Open mobile menu
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuSidebar.classList.add('active');
+            mobileMenuOverlay.classList.add('active');
+            body.classList.add('menu-open');
+        });
+        
+        // Close mobile menu function
+        function closeMobileMenu() {
+            mobileMenuSidebar.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+            body.classList.remove('menu-open');
+        }
+        
+        // Close mobile menu events
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+        
+        // Close menu when clicking on a link
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+        
+        // Header scroll effect
+        const header = document.querySelector('header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
