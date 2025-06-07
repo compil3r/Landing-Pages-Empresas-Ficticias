@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SFood – Supermercado Digital e Refeições Semanais | Sua Cozinha Digital em Minutos</title>
+  <!-- Meta tags para SEO -->
+  <meta name="description" content="SFood: Compras de supermercado online e refeições prontas com entrega programada. Economize tempo com nossa solução digital para sua alimentação.">
+  <meta name="keywords" content="supermercado online, delivery de comida, refeições prontas, compras recorrentes, entrega de supermercado">
+  <!-- Fonte moderna e divertida -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+    /* Reset e configurações gerais */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f2f2f2;
+      color: #333;
+      line-height: 1.5;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Paleta de cores baseada no logo */
+    :root {
+      --azul-royal: #1a5fb4;
+      --laranja-vivo: #ff6d00;
+      --rosa-vermelho: #ff4081;
+      --verde-brilhante: #00c853;
+      --cinza-claro: #f2f2f2;
+      --cinza-escuro: #444;
+      --branco: #ffffff;
+      --sombra-card: rgba(0, 0, 0, 0.1);
+    }
+
+    /* ====== HEADER ====== */
+    header {
+      background-color: var(--branco);
+      padding: 0px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px var(--sombra-card);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo-sfood {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: logoBounce 1s ease-in-out infinite alternate;
+    }
+    .logo-sfood img {
+      max-height: 100px;
+    }
+    .logo-sfood span {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, var(--azul-royal), var(--laranja-vivo));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    @keyframes logoBounce {
+      to { transform: translateY(-3px); }
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+    }
+    nav a {
+      font-weight: 500;
+      color: var(--cinza-escuro);
+      position: relative;
+      transition: color 0.2s;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--azul-royal);
+      transition: width 0.3s;
+      border-radius: 2px;
+    }
+    nav a:hover {
+      color: var(--azul-royal);
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    /* Botão de download do app */
+    .download-btn {
+      background-color: var(--azul-royal);
+      color: var(--branco);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .download-btn:hover {
+      background-color: var(--laranja-vivo);
+      transform: translateY(-3px);
+    }
+    
+    /* Menu Mobile */
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--azul-royal);
+      cursor: pointer;
+      z-index: 1001;
+    }
+    
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      height: 100vh;
+      background-color: var(--branco);
+      z-index: 1000;
+      transition: right 0.3s ease;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      padding: 80px 30px 30px;
+      overflow-y: auto;
+    }
+    
+    .mobile-menu.active {
+      right: 0;
+    }
+    
+    .mobile-menu-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--azul-royal);
+      cursor: pointer;
+    }
+    
+    .mobile-nav-list {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+    
+    .mobile-nav-item {
+      margin-bottom: 20px;
+    }
+    
+    .mobile-nav-link {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--cinza-escuro);
+      display: block;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .mobile-nav-link:hover {
+      color: var(--azul-royal);
+      padding-left: 10px;
+    }
+    
+    .mobile-download-btn {
+      background-color: var(--azul-royal);
+      color: var(--branco);
+      padding: 15px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .mobile-download-btn:hover {
+      background-color: var(--laranja-vivo);
+    }
+    
+    .mobile-social {
+      margin-top: auto;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .mobile-social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--cinza-claro);
+      color: var(--azul-royal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .mobile-social-link:hover {
+      background-color: var(--azul-royal);
+      color: var(--branco);
+    }
+    
+    /* Overlay para quando o menu mobile estiver aberto */
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ====== HERO ====== */
+    .hero {
+      position: relative;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--branco);
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+      overflow: hidden;
+    }
+    
+    /* Estilo para o vídeo de fundo */
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    
+    /* Overlay para melhorar a visibilidade do texto */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(26,95,180,0.8), rgba(255,109,0,0.8));
+      z-index: -1;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      padding: 0 20px;
+      animation: fadeIn 1.2s ease-out;
+    }
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px var(--sombra-card);
+      transition: all 0.3s ease;
+    }
+    .hero-btn-primary {
+      background-color: var(--branco);
+      color: var(--azul-royal);
+    }
+    .hero-btn-secondary {
+      background-color: transparent;
+      color: var(--branco);
+      border: 2px solid var(--branco);
+    }
+    .hero-btn:hover {
+      transform: translateY(-3px);
+    }
+    .hero-btn-primary:hover {
+      background-color: var(--azul-royal);
+      color: var(--branco);
+    }
+    .hero-btn-secondary:hover {
+      background-color: var(--branco);
+      color: var(--azul-royal);
+    }
+    
+    /* Contador de tempo economizado */
+    .time-saved {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    .time-counter {
+      background: rgba(255,255,255,0.2);
+      padding: 15px;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+    }
+    .time-counter h3 {
+      font-size: 2.5rem;
+      margin-bottom: 5px;
+    }
+    .time-counter p {
+      font-size: 0.9rem;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ====== SEÇÃO VANTAGENS ====== */
+    .vantagens {
+      background-color: var(--cinza-claro);
+      padding: 80px 20px 40px;
+    }
+    .vantagens .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .vantagens h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--azul-royal);
+      margin-bottom: 50px;
+      position: relative;
+    }
+    .vantagens h2::after {
+      content: '🍔';
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+    }
+    .vantagens-lista {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
+    .vantagem-item {
+      background-color: var(--branco);
+      border-radius: 16px;
+      padding: 30px 20px;
+      box-shadow: 0 6px 16px var(--sombra-card);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .vantagem-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--azul-royal);
+    }
+    .vantagem-item:nth-child(2n)::before {
+      background: var(--laranja-vivo);
+    }
+    .vantagem-item:nth-child(3n)::before {
+      background: var(--rosa-vermelho);
+    }
+    .vantagem-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px var(--sombra-card);
+    }
+    .vantagem-item img {
+      max-width: 60px;
+      margin: 0 auto 20px;
+    }
+    .vantagem-item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+      color: var(--cinza-escuro);
+    }
+    .vantagem-item p {
+      font-size: 1rem;
+      color: #666;
+      margin: 0 auto;
+      max-width: 240px;
+    }
+
+    /* ====== SEÇÃO COMO FUNCIONA ====== */
+    .compras-entregas {
+      padding: 80px 20px;
+      background-color: var(--branco);
+      position: relative;
+      clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+    }
+    .compras-entregas .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .compras-entregas h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--azul-royal);
+      margin-bottom: 50px;
+      position: relative;
+    }
+    .compras-entregas h2::after {
+      content: '🚀';
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+    }
+    
+    /* Abas para alternar entre os dois serviços */
+    .service-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 50px;
+      gap: 20px;
+    }
+    
+    .service-tab {
+      padding: 15px 30px;
+      background-color: var(--cinza-claro);
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .service-tab.active {
+      background-color: var(--azul-royal);
+      color: var(--branco);
+    }
+    
+    .service-tab:hover:not(.active) {
+      background-color: #e0e0e0;
+    }
+    
+    .service-content {
+      display: none;
+    }
+    
+    .service-content.active {
+      display: block;
+    }
+    
+    .ce-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+    .ce-grid:nth-child(even) {
+      grid-template-areas: "img texto";
+    }
+    .ce-grid:nth-child(odd) {
+      grid-template-areas: "texto img";
+    }
+    .ce-grid .ce-texto {
+      grid-area: texto;
+      animation: slideIn 1s ease-out forwards;
+      opacity: 0;
+    }
+    .ce-grid .ce-texto h3 {
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+      color: var(--cinza-escuro);
+    }
+    .ce-grid .ce-texto p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    .ce-grid .ce-texto a {
+      display: inline-block;
+      background-color: var(--azul-royal);
+      color: var(--branco);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px var(--sombra-card);
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .ce-grid .ce-texto a:hover {
+      background-color: var(--laranja-vivo);
+      transform: translateY(-3px);
+    }
+    .ce-grid img {
+      grid-area: img;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px var(--sombra-card);
+      animation: fadeIn 1.2s ease-out forwards;
+      opacity: 0;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    /* Passos numerados */
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 60px;
+      position: relative;
+    }
+    
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #e0e0e0;
+      z-index: 1;
+    }
+    
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      width: 25%;
+    }
+    
+    .step-number {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: var(--branco);
+      border: 2px solid var(--azul-royal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--azul-royal);
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .step:hover .step-number {
+      background-color: var(--azul-royal);
+      color: var(--branco);
+      transform: scale(1.1);
+    }
+    
+    .step-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    /* ====== SEÇÃO DE DEPOIMENTOS ====== */
+    .testemunhos {
+      padding: 80px 20px;
+      background-color: var(--cinza-claro);
+    }
+    .testemunhos .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .testemunhos h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--azul-royal);
+      margin-bottom: 50px;
+      position: relative;
+    }
+    .testemunhos h2::after {
+      content: '✨';
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+    }
+    .tm-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
+    .tm-card {
+      background-color: var(--branco);
+      border-radius: 16px;
+      padding: 30px 20px;
+      box-shadow: 0 6px 16px var(--sombra-card);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .tm-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px var(--sombra-card);
+    }
+    .tm-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 16px;
+      object-fit: cover;
+      border: 3px solid var(--azul-royal);
+    }
+    .tm-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--cinza-escuro);
+    }
+    .tm-card p {
+      font-size: 1rem;
+      color: #666;
+      font-style: italic;
+    }
+    
+    /* Indicadores de economia */
+    .savings {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 60px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .saving-item {
+      text-align: center;
+      padding: 20px;
+      background-color: var(--branco);
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      width: 200px;
+    }
+    
+    .saving-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--azul-royal);
+      margin-bottom: 10px;
+    }
+    
+    .saving-text {
+      font-size: 1rem;
+      color: var(--cinza-escuro);
+    }
+
+    /* ====== SEÇÃO APP ====== */
+    .app-section {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, var(--azul-royal), #0a3d7c);
+      color: var(--branco);
+      text-align: center;
+    }
+    
+    .app-section .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .app-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    
+    .app-section p {
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .app-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
+    
+    .app-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--branco);
+      color: var(--azul-royal);
+      padding: 12px 25px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .app-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    
+    .app-button i {
+      font-size: 24px;
+    }
+    
+    .app-button .text {
+      text-align: left;
+    }
+    
+    .app-button .small-text {
+      font-size: 0.8rem;
+    }
+    
+    .app-button .big-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    
+    .app-mockup {
+      max-width: 300px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .app-mockup img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    /* ====== SEÇÃO CONTATO ====== */
+    .contato {
+      padding: 80px 20px;
+      background-color: var(--branco);
+      position: relative;
+      clip-path: polygon(0 0, 100% 15%, 100% 100%, 0% 100%);
+    }
+    .contato .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .contato h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--azul-royal);
+      margin-bottom: 50px;
+      margin-top: 50px;
+      position: relative;
+    }
+    .contato h2::after {
+      content: '📩';
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+    }
+    .contato p.subtitle {
+      text-align: center;
+      color: #555;
+      margin-bottom: 40px;
+      font-size: 1rem;
+    }
+    .contato form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .contato label {
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .contato input,
+    .contato textarea,
+    .contato select {
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #333;
+      transition: border-color 0.2s;
+    }
+    .contato input:focus,
+    .contato textarea:focus,
+    .contato select:focus {
+      border-color: var(--azul-royal);
+      outline: none;
+    }
+    .contato textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .contato button {
+      background-color: var(--azul-royal);
+      color: var(--branco);
+      padding: 16px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 16px var(--sombra-card);
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .contato button:hover {
+      background-color: var(--laranja-vivo);
+      transform: translateY(-3px);
+    }
+    .contato-info {
+      text-align: center;
+      margin-top: 40px;
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+    .contato-info a {
+      color: var(--azul-royal);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .contato-info a:hover {
+      text-decoration: underline;
+    }
+
+    /* ====== FOOTER ====== */
+    footer {
+      background-color: var(--azul-royal);
+      color: var(--branco);
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.9rem;
+      position: relative;
+    }
+    footer a {
+      color: var(--branco);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+    
+    /* Botão flutuante de WhatsApp */
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background-color: #25D366;
+      color: var(--branco);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 99;
+      transition: all 0.3s ease;
+    }
+    
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* ====== RESPONSIVIDADE ====== */
+    @media (max-width: 900px) {
+      .ce-grid {
+        grid-template-areas: "texto" "img";
+      }
+      .ce-grid:nth-child(even),
+      .ce-grid:nth-child(odd) {
+        grid-template-columns: 1fr;
+      }
+      .vantagens-lista,
+      .tm-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      .hero-content p {
+        font-size: 1rem;
+      }
+      header {
+        padding: 15px 20px;
+      }
+      .steps {
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+      }
+      .steps::before {
+        display: none;
+      }
+      .step {
+        width: 100%;
+        max-width: 300px;
+      }
+      .time-saved {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      /* Estilos específicos para mobile */
+      .nav-menu, .download-btn {
+        display: none;
+      }
+      
+      .mobile-menu-toggle {
+        display: block;
+      }
+      
+      .service-tabs {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .service-tab {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .app-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="logo-sfood">
+      <img src="2.png" alt="Logo SFood" />
+    </div>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="#vantagens">Vantagens</a></li>
+        <li><a href="#compras-entregas">Como Funciona</a></li>
+        <li><a href="#app">Baixe o App</a></li>
+        <li><a href="#testemunhos">Depoimentos</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+    <a href="#app" class="download-btn">
+      <i class="fas fa-download"></i> Baixar App
+    </a>
+    <button class="mobile-menu-toggle" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>
+  
+  <!-- Menu Mobile -->
+  <div class="mobile-menu">
+    <button class="mobile-menu-close" aria-label="Fechar menu">
+      <i class="fas fa-times"></i>
+    </button>
+    <ul class="mobile-nav-list">
+      <li class="mobile-nav-item"><a href="#vantagens" class="mobile-nav-link">Vantagens</a></li>
+      <li class="mobile-nav-item"><a href="#compras-entregas" class="mobile-nav-link">Como Funciona</a></li>
+      <li class="mobile-nav-item"><a href="#app" class="mobile-nav-link">Baixe o App</a></li>
+      <li class="mobile-nav-item"><a href="#testemunhos" class="mobile-nav-link">Depoimentos</a></li>
+      <li class="mobile-nav-item"><a href="#contato" class="mobile-nav-link">Contato</a></li>
+    </ul>
+    <a href="#app" class="mobile-download-btn">
+      <i class="fas fa-download"></i> Baixar App
+    </a>
+    <div class="mobile-social">
+      <a href="#" class="mobile-social-link"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="mobile-social-link"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="mobile-social-link"><i class="fab fa-twitter"></i></a>
+    </div>
+  </div>
+  
+  <!-- Overlay para quando o menu mobile estiver aberto -->
+  <div class="menu-overlay"></div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="sfood.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1>Sua Cozinha Digital em Minutos</h1>
+      <p>Compras de supermercado online e refeições prontas com entrega programada — economize tempo sem sair de casa!</p>
+      <div class="hero-btns">
+        <a href="#compras-entregas" class="hero-btn hero-btn-primary">Compras de Supermercado</a>
+        <a href="#compras-entregas" class="hero-btn hero-btn-secondary">Refeições Semanais</a>
+      </div>
+      
+      <div class="time-saved">
+        <div class="time-counter">
+          <h3>2h+</h3>
+          <p>Tempo economizado</p>
+        </div>
+        <div class="time-counter">
+          <h3>15min</h3>
+          <p>Entrega expressa</p>
+        </div>
+        <div class="time-counter">
+          <h3>24/7</h3>
+          <p>Disponibilidade</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VANTAGENS ===== -->
+  <section class="vantagens" id="vantagens">
+    <div class="container">
+      <h2>Por que escolher o SFood?</h2>
+      <div class="vantagens-lista">
+        <div class="vantagem-item">
+          <img src="https://img.icons8.com/ios-filled/100/1a5fb4/shopping-cart.png" alt="Ícone Carrinho" />
+          <h3>Supermercado Online</h3>
+          <p>Adicione tudo o que precisa ao carrinho virtual e receba rapidinho em casa, sem fila e sem stress.</p>
+        </div>
+        <div class="vantagem-item">
+          <img src="https://img.icons8.com/ios-filled/100/ff6d00/hourglass.png" alt="Ícone Agilidade" />
+          <h3>Entrega Agendada</h3>
+          <p>Você escolhe data e horário — nós garantimos que seu pedido chegue fresquinho no momento certo.</p>
+        </div>
+        <div class="vantagem-item">
+          <img src="https://img.icons8.com/ios-filled/100/ff4081/restaurant.png" alt="Ícone Refeição" />
+          <h3>Refeições Prontas Semanais</h3>
+          <p>Receba pratos variados, preparados por chefs, sem ter o trabalho de cozinhar durante a semana.</p>
+        </div>
+        <div class="vantagem-item">
+          <img src="https://img.icons8.com/?size=100&id=77530&format=png&color=1a5fb4" alt="Ícone Pagamento" />
+          <h3>Pagamentos Seguros</h3>
+          <p>Checkout com criptografia de ponta, diversas formas de pagamento e cashback em promoções especiais.</p>
+        </div>
+        <div class="vantagem-item">
+          <img src="https://img.icons8.com/ios-filled/100/1a5fb4/repeat.png" alt="Ícone Recorrência" />
+          <h3>Compras Recorrentes</h3>
+          <p>Configure entregas automáticas dos itens que você compra regularmente e nunca fique sem o essencial.</p>
+        </div>
+        <div class="vantagem-item">
+          <img src="https://img.icons8.com/ios-filled/100/ff6d00/discount.png" alt="Ícone Promoções" />
+          <h3>Ofertas Exclusivas</h3>
+          <p>Acesse promoções e descontos exclusivos para clientes do aplicativo, economizando em cada compra.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMO FUNCIONA ===== -->
+  <section class="compras-entregas" id="compras-entregas">
+    <div class="container">
+      <h2>Como Funciona</h2>
+      
+      <div class="service-tabs">
+        <div class="service-tab active" data-target="supermercado">Compras de Supermercado</div>
+        <div class="service-tab" data-target="refeicoes">Refeições Prontas</div>
+      </div>
+      
+      <!-- Conteúdo Supermercado -->
+      <div class="service-content active" id="supermercado-content">
+        <div class="ce-grid">
+          <div class="ce-texto">
+            <h3>Supermercado na palma da sua mão</h3>
+            <p>Navegue por categorias e adicione produtos ao carrinho em poucos cliques. Ofertas diárias e descontos em itens fresquinhos!</p>
+            <p>Escolha seu horário de entrega e receba tudo embalado com cuidado. Fácil, rápido e sem filas.</p>
+            <a href="#app">Baixe o App</a>
+          </div>
+          <div>
+            <img src="entrega.png" alt="Compras Online de Supermercado" />
+          </div>
+        </div>
+        
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h4 class="step-title">Escolha os produtos</h4>
+            <p>Navegue pelo app e adicione itens ao carrinho</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h4 class="step-title">Agende a entrega</h4>
+            <p>Selecione data e horário que preferir</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h4 class="step-title">Pague com segurança</h4>
+            <p>Escolha entre várias formas de pagamento</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h4 class="step-title">Receba em casa</h4>
+            <p>Seus produtos chegam fresquinhos na sua porta</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Conteúdo Refeições -->
+      <div class="service-content" id="refeicoes-content">
+        <div class="ce-grid">
+          <div>
+            <img src="geladeira.png" alt="Entrega de Refeição Pronta" />
+          </div>
+          <div class="ce-texto">
+            <h3>Refeições Prontas Recorrentes</h3>
+            <p>Escolha seu plano semanal — café da manhã, almoço e jantar — com pratos preparados por chefs locais.</p>
+            <p>Defina frequência (semanal, quinzenal ou mensal). Ajuste ou cancele quando quiser, sem burocracia.</p>
+            <a href="#app">Assine Agora</a>
+          </div>
+        </div>
+        
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h4 class="step-title">Escolha seu plano</h4>
+            <p>Selecione o número de refeições semanais</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h4 class="step-title">Personalize o cardápio</h4>
+            <p>Indique preferências e restrições alimentares</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h4 class="step-title">Defina a frequência</h4>
+            <p>Escolha entre entregas semanais ou quinzenais</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h4 class="step-title">Receba e aqueça</h4>
+            <p>Refeições prontas para consumo em minutos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ===== SEÇÃO APP ===== -->
+  <section class="app-section" id="app">
+    <div class="container">
+      <h2>Baixe o App SFood</h2>
+      <p>Tenha acesso a milhares de produtos e refeições prontas com apenas alguns toques. Disponível para iOS e Android.</p>
+      
+      <div class="app-buttons">
+        <a href="#" class="app-button">
+          <i class="fab fa-apple"></i>
+          <div class="text">
+            <div class="small-text">Baixe na</div>
+            <div class="big-text">App Store</div>
+          </div>
+        </a>
+        <a href="#" class="app-button">
+          <i class="fab fa-google-play"></i>
+          <div class="text">
+            <div class="small-text">Disponível no</div>
+            <div class="big-text">Google Play</div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="app-mockup">
+        <img src="https://via.placeholder.com/300x600/1a5fb4/ffffff?text=App+SFood" alt="App SFood Mockup">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DEPOIMENTOS ===== -->
+  <section class="testemunhos" id="testemunhos">
+    <div class="container">
+      <h2>O que dizem nossos clientes</h2>
+      
+      <div class="savings">
+        <div class="saving-item">
+          <div class="saving-number">98%</div>
+          <div class="saving-text">de satisfação dos clientes</div>
+        </div>
+        <div class="saving-item">
+          <div class="saving-number">2h+</div>
+          <div class="saving-text">de economia de tempo semanal</div>
+        </div>
+        <div class="saving-item">
+          <div class="saving-number">15%</div>
+          <div class="saving-text">de economia em compras</div>
+        </div>
+        <div class="saving-item">
+          <div class="saving-number">50k+</div>
+          <div class="saving-text">usuários ativos</div>
+        </div>
+      </div>
+      
+      <div class="tm-grid">
+        <div class="tm-card">
+          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Foto Cliente 1" />
+          <h4>Mariana C.</h4>
+          <p>"O SFood salvou minhas noites! Não preciso mais escolher entre trabalho e cozinha — recebo refeições incríveis toda semana."</p>
+        </div>
+        <div class="tm-card">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Foto Cliente 2" />
+          <h4>Carlos M.</h4>
+          <p>"As compras de mercado chegam no horário exato. Excelente serviço e muita variedade. Recomendo para todo mundo!"</p>
+        </div>
+        <div class="tm-card">
+          <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Foto Cliente 3" />
+          <h4>Ana Paula S.</h4>
+          <p>"Meus almoços semanais são deliciosos e saudáveis. A praticidade e o sabor superam qualquer expectativa."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTATO ===== -->
+  <section class="contato" id="contato">
+    <div class="container">
+      <h2>Fale com um Consultor</h2>
+      <p class="subtitle">Tire suas dúvidas sobre nossos planos de refeições ou compras de supermercado. Responderemos em até 24 horas!</p>
+      <form action="#" method="post">
+        <label for="nome">Nome Completo</label>
+        <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required />
+
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+        
+        <label for="telefone">Telefone</label>
+        <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" />
+        
+        <label for="assunto">Assunto</label>
+        <select id="assunto" name="assunto" class="form-control">
+          <option value="">Selecione um assunto</option>
+          <option value="supermercado">Compras de Supermercado</option>
+          <option value="refeicoes">Planos de Refeições</option>
+          <option value="suporte">Suporte Técnico</option>
+          <option value="outro">Outro Assunto</option>
+        </select>
+
+        <label for="mensagem">Mensagem</label>
+        <textarea id="mensagem" name="mensagem" placeholder="Como podemos ajudar?" required></textarea>
+
+        <button type="submit">Enviar Mensagem</button>
+      </form>
+      <div class="contato-info">
+        <p><strong>E-mail:</strong> <a href="mailto:suporte@sfood.com">suporte@sfood.com</a> &nbsp;|&nbsp; <strong>Telefone:</strong> (11) 4003-0123</p>
+        <p><strong>Endereço:</strong> Rua do Mercado, 456 – Centro, São Paulo, SP</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>&copy; <span id="ano-atual-sfood"></span> SFood. Todos os direitos reservados. <br> Este é um site fictício, desenvolvido pelo <a href="https://profvitorhugo.online" style="text-decoration: underline;">Prof Vitor Hugo</a> para uma disciplina.</p>
+  </footer>
+  
+  <!-- Botão flutuante de WhatsApp -->
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- Scripts -->
+  <script>
+    document.getElementById('ano-atual-sfood').innerText = new Date().getFullYear();
+    
+    // Garantir que o vídeo seja reproduzido automaticamente
+    document.addEventListener('DOMContentLoaded', function() {
+      const video = document.querySelector('.hero-video');
+      video.play().catch(function(error) {
+        console.log("Reprodução automática não permitida:", error);
+        // Adicionar um botão de play caso o autoplay não funcione
+        const playButton = document.createElement('button');
+        playButton.innerHTML = '▶️ Play';
+        playButton.style.position = 'absolute';
+        playButton.style.zIndex = '2';
+        playButton.style.bottom = '20px';
+        playButton.style.left = '50%';
+        playButton.style.transform = 'translateX(-50%)';
+        playButton.style.padding = '10px 20px';
+        playButton.style.background = 'rgba(255,255,255,0.7)';
+        playButton.style.border = 'none';
+        playButton.style.borderRadius = '30px';
+        playButton.style.cursor = 'pointer';
+        
+        playButton.addEventListener('click', function() {
+          video.play();
+          this.remove();
+        });
+        
+        document.querySelector('.hero').appendChild(playButton);
+      });
+      
+      // Funcionalidade das abas de serviços
+      const tabs = document.querySelectorAll('.service-tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          // Remover classe active de todas as abas
+          tabs.forEach(t => t.classList.remove('active'));
+          // Adicionar classe active à aba clicada
+          this.classList.add('active');
+          
+          // Esconder todos os conteúdos
+          document.querySelectorAll('.service-content').forEach(content => {
+            content.classList.remove('active');
+          });
+          
+          // Mostrar o conteúdo correspondente
+          const target = this.getAttribute('data-target');
+          document.getElementById(`${target}-content`).classList.add('active');
+        });
+      });
+      
+      // Animar elementos quando entrarem na viewport
+      const animateOnScroll = function() {
+        const elements = document.querySelectorAll('.ce-texto, .ce-grid img, .vantagem-item, .tm-card');
+        
+        elements.forEach(element => {
+          const elementPosition = element.getBoundingClientRect().top;
+          const screenPosition = window.innerHeight / 1.3;
+          
+          if (elementPosition < screenPosition) {
+            element.style.opacity = '1';
+          }
+        });
+      };
+      
+      window.addEventListener('scroll', animateOnScroll);
+      animateOnScroll(); // Executar uma vez no carregamento
+      
+      // Menu Mobile
+      const menuToggle = document.querySelector('.mobile-menu-toggle');
+      const menuClose = document.querySelector('.mobile-menu-close');
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const menuOverlay = document.querySelector('.menu-overlay');
+      const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+      
+      // Abrir menu
+      menuToggle.addEventListener('click', function() {
+        mobileMenu.classList.add('active');
+        menuOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Impedir rolagem do body
+      });
+      
+      // Fechar menu
+      menuClose.addEventListener('click', closeMenu);
+      menuOverlay.addEventListener('click', closeMenu);
+      
+      // Fechar menu ao clicar em um link
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+      
+      function closeMenu() {
+        mobileMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restaurar rolagem do body
+      }
+      
+      // Fechar menu ao redimensionar para desktop
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 900) {
+          closeMenu();
+        }
+      });
+    });
+  </script>
+  
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</body>
+</html>
