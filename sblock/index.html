@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBlock - Segurança Digital para a Nova Geração</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e Estilos Gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0A2463;
+            --secondary: #f8b858;
+            --accent: #3E92CC;
+            --text: #2D3142;
+            --light-bg: #F8F9FA;
+            --white: #FFFFFF;
+            --gradient: linear-gradient(135deg, #0A2463 0%, #3E92CC 100%);
+            --shadow: 0 10px 30px rgba(10, 36, 99, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--light-bg);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .primary {
+            background-color: var(--secondary);
+            color: var(--primary);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+            color: var(--primary);
+        }
+
+        .secondary {
+            background-color: var(--primary);
+            color: var(--white);
+            box-shadow: 0 5px 15px rgba(10, 36, 99, 0.3);
+        }
+
+        .secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(10, 36, 99, 0.4);
+            color: var(--white);
+        }
+
+        .full-width {
+            width: 100%;
+        }
+
+        .highlight {
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 215, 0, 0.3);
+            z-index: -1;
+            transform: skewX(-15deg);
+        }
+
+        .strike-through {
+            position: relative;
+        }
+
+        .strike-through::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary);
+            left: 0;
+            top: 50%;
+            transform: rotate(-5deg);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 55px;
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-left: 10px;
+            letter-spacing: -1px;
+        }
+
+        .logo-text span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .header-cta {
+            margin-left: 20px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: var(--gradient);
+            opacity: 0.05;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-lock {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .lock-1 {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .lock-2 {
+            bottom: 30%;
+            right: 15%;
+            animation-delay: 0.5s;
+        }
+
+        .lock-3 {
+            top: 60%;
+            left: 20%;
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            }
+        }
+
+        /* Why SBlock Section */
+        .why-sblock {
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature {
+            background-color: var(--white);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+            z-index: -1;
+            transition: var(--transition);
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature:hover::before {
+            height: 100%;
+            opacity: 0.05;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(10, 36, 99, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 2rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .feature:hover .feature-icon {
+            background-color: var(--secondary);
+            color: var(--primary);
+            transform: rotateY(360deg);
+            transition: transform 0.8s, background-color 0.3s, color 0.3s;
+        }
+
+        .feature h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .feature p {
+            color: var(--text);
+            opacity: 0.8;
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        /* Product Sections */
+        .product {
+            padding: 120px 0;
+        }
+
+        .product:nth-child(odd) {
+            background-color: var(--light-bg);
+        }
+
+        .product-container {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .reverse .product-container {
+            flex-direction: row-reverse;
+        }
+
+        .product-content {
+            flex: 1;
+        }
+
+        .product-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .security-badge {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 100px;
+            height: 100px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            animation: pulse 3s infinite;
+        }
+
+        .benefits {
+            list-style: none;
+            margin: 30px 0;
+        }
+
+        .benefits li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .benefits li::before {
+            content: '\f058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        .testimonial-slider {
+            margin-top: 60px;
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding: 20px 10px 40px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+
+        .testimonial-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .testimonial {
+            flex: 0 0 350px;
+            background-color: var(--white);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: left;
+            scroll-snap-align: start;
+            transition: var(--transition);
+            border-top: 5px solid var(--secondary);
+        }
+
+        .testimonial:hover {
+            transform: translateY(-10px);
+        }
+
+        .rating {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 25px;
+        }
+
+        .client {
+            display: flex;
+            align-items: center;
+        }
+
+        .client img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .client h4 {
+            margin-bottom: 0;
+            font-size: 1.1rem;
+        }
+
+        .client span {
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.7;
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            background: var(--gradient);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-assistant::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgzMCkiPjxyZWN0IHg9IjE5IiB5PSIwIiB3aWR0aD0iMiIgaGVpZ2h0PSI0MCIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIwLjA1Ii8+PC9wYXR0ZXJuPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiLz48L3N2Zz4=');
+            opacity: 0.5;
+        }
+
+        .ai-container {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ai-content {
+            flex: 1;
+        }
+
+        .ai-content h2, .ai-content p {
+            color: var(--white);
+        }
+
+        .ai-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .ai-image img {
+            max-width: 100%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .chat-preview {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .chat-message {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .chat-message:last-child {
+            margin-bottom: 0;
+        }
+
+        .chat-message.ai {
+            flex-direction: row;
+        }
+
+        .chat-message.user {
+            /* flex-direction: row-reverse; */
+            justify-content: flex-end;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .chat-message.ai .avatar {
+            background-color: var(--secondary);
+            color: var(--primary);
+            margin-right: 15px;
+        }
+
+        .chat-message.user .avatar {
+            background-color: var(--white);
+            color: var(--primary);
+            margin-left: 15px;
+        }
+
+        .message {
+            padding: 15px 20px;
+            border-radius: 20px;
+            max-width: 80%;
+        }
+
+        .chat-message.ai .message {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-top-left-radius: 0;
+        }
+
+        .chat-message.user .message {
+            background-color: var(--white);
+            color: var(--text);
+            border-top-right-radius: 0;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background-color: var(--light-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 80%;
+            height: 200%;
+            background: var(--gradient);
+            opacity: 0.05;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .quote-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-form {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .form-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: none;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            opacity: 0.6;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            opacity: 1;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        .form-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(62, 146, 204, 0.2);
+        }
+
+        /* Blog Preview */
+        .blog-preview {
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0 40px;
+        }
+
+        .blog-card {
+            background-color: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .blog-image {
+            height: 200px;
+            background-color: var(--accent);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .blog-content {
+            padding: 30px;
+        }
+
+        .blog-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .blog-content p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .read-more {
+            font-weight: 600;
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .read-more::after {
+            content: '\f061';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            margin-left: 5px;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .read-more:hover::after {
+            margin-left: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 80px 0 0;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo p {
+            opacity: 0.8;
+            max-width: 300px;
+        }
+
+        .footer-links {
+            flex: 2;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .link-group {
+            min-width: 150px;
+            margin-bottom: 30px;
+        }
+
+        .link-group h4 {
+            color: var(--white);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .link-group ul {
+            list-style: none;
+        }
+
+        .link-group ul li {
+            margin-bottom: 10px;
+        }
+
+        .link-group ul li a {
+            color: var(--white);
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .link-group ul li a:hover {
+            opacity: 1;
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 10px;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--secondary);
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        /* Floating Chat Button */
+        .chat-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+            cursor: pointer;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-button::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            z-index: -1;
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            80%, 100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 2.2rem;
+            }
+
+            .hero {
+                padding: 150px 0 80px;
+            }
+
+            .product-container, .ai-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .reverse .product-container {
+                flex-direction: column;
+            }
+
+            .product-image, .ai-image {
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .security-badge {
+                bottom: -20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            .hero {
+                padding: 120px 0 60px;
+            }
+
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                margin-bottom: 40px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .form-fields {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .link-group {
+                width: 100%;
+                margin-bottom: 0;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-menu-open nav ul {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+            }
+
+            .mobile-menu-open nav ul li {
+                margin: 10px 0;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .testimonial-slider {
+                padding: 20px 0 40px;
+            }
+
+            .testimonial {
+                flex: 0 0 280px;
+                padding: 30px 20px;
+            }
+
+            .chat-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <img src="sblock.png" alt="">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#seguros">Seguros</a></li>
+                    <li><a href="#sobre">Sobre Nós</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </nav>
+            <div class="header-cta">
+                <a href="#cotacao" class="btn primary">Faça uma Cotação</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1>Segurança sem <span class="strike-through">burocracia</span></h1>
+                <h2>Proteção digital para o que realmente importa</h2>
+                <p>Seguros descomplicados para uma geração que valoriza tempo e simplicidade</p>
+                <div class="hero-buttons">
+                    <a href="#seguro-vida" class="btn primary">Seguro de Vida</a>
+                    <a href="#seguro-carro" class="btn secondary">Seguro de Carro</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Jovem profissional usando smartphone">
+                <div class="floating-lock lock-1">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="floating-lock lock-2">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="floating-lock lock-3">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why SBlock Section -->
+    <section class="why-sblock" id="sobre">
+        <div class="container">
+            <h2>Segurança com <span class="highlight">DNA digital</span></h2>
+            
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Zero Burocracia</h3>
+                    <p>Contratação 100% online em menos de 5 minutos</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Tudo no App</h3>
+                    <p>Gerencie sua apólice e solicite assistência com poucos toques</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>IA BlockGuard</h3>
+                    <p>Assistente virtual disponível 24/7 para tirar suas dúvidas</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <h3>Personalização Total</h3>
+                    <p>Pague apenas pelo que realmente precisa</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Sections -->
+    <section id="seguro-vida" class="product">
+        <div class="container product-container">
+            <div class="product-content">
+                <span class="tag">VIDA</span>
+                <h2>Seguro de Vida <span class="highlight">Digital</span></h2>
+                <p>Proteção financeira para você e quem você ama, sem papelada e com coberturas que fazem sentido para sua vida.</p>
+                
+                <ul class="benefits">
+                    <li>Contratação 100% online</li>
+                    <li>Coberturas personalizáveis</li>
+                    <li>Assistência funeral digital</li>
+                    <li>Telemedicina inclusa</li>
+                    <li>Descontos em academias e apps de saúde</li>
+                </ul>
+                
+                <a href="#cotacao" class="btn primary">Faça sua cotação</a>
+            </div>
+            
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="Seguro de Vida Digital">
+                <div class="security-badge">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="seguro-carro" class="product reverse">
+        <div class="container product-container">
+            <div class="product-content">
+                <span class="tag">AUTO</span>
+                <h2>Seguro Auto <span class="highlight">Flex</span></h2>
+                <p>Proteção para seu veículo que se adapta ao seu estilo de vida. Pague menos se dirigir menos.</p>
+                
+                <ul class="benefits">
+                    <li>Preço baseado na sua quilometragem real</li>
+                    <li>Assistência 24h via app</li>
+                    <li>Guincho digital - acompanhe em tempo real</li>
+                    <li>Vistoria por selfie do veículo</li>
+                    <li>Cashback em postos parceiros</li>
+                </ul>
+                
+                <a href="#cotacao" class="btn primary">Faça sua cotação</a>
+            </div>
+            
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="Seguro Auto Flex">
+                <div class="security-badge">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="seguros">
+        <div class="container">
+            <h2>O que dizem nossos <span class="highlight">clientes</span></h2>
+            
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <div class="rating">★★★★★</div>
+                    <p>"Finalmente um seguro que não me faz perder horas ao telefone. Fiz tudo pelo app e quando precisei acionar, foi resolvido em minutos."</p>
+                    <div class="client">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente">
+                        <div>
+                            <h4>Marina Silva, 28</h4>
+                            <span>Designer</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="rating">★★★★★</div>
+                    <p>"O seguro auto flex é perfeito para mim que uso pouco o carro. Economizo muito comparado com as seguradoras tradicionais."</p>
+                    <div class="client">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente">
+                        <div>
+                            <h4>Rafael Costa, 31</h4>
+                            <span>Desenvolvedor</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="rating">★★★★★</div>
+                    <p>"A assistente virtual BlockGuard me ajudou a entender todas as coberturas e escolher o plano ideal. Muito mais fácil que falar com corretores."</p>
+                    <div class="client">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Cliente">
+                        <div>
+                            <h4>Juliana Mendes, 26</h4>
+                            <span>Arquiteta</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="rating">★★★★★</div>
+                    <p>"Precisei acionar o seguro após um acidente e fiquei impressionado com a rapidez. Tudo resolvido pelo app, sem burocracia."</p>
+                    <div class="client">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Cliente">
+                        <div>
+                            <h4>Lucas Oliveira, 34</h4>
+                            <span>Médico</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Assistant -->
+    <section class="ai-assistant">
+        <div class="container ai-container">
+            <div class="ai-content">
+                <h2>Conheça a <span class="highlight">BlockGuard</span></h2>
+                <p>Nossa assistente virtual disponível 24/7 para tirar suas dúvidas, ajudar com sinistros e dar dicas de segurança.</p>
+                
+                <div class="chat-preview">
+                    <div class="chat-message ai">
+                        <span class="avatar">🔒</span>
+                        <div class="message">Olá! Sou a BlockGuard. Como posso ajudar você hoje?</div>
+                    </div>
+                    
+                    <div class="chat-message user">
+                        <div class="message">Como faço para acionar o guincho pelo app?</div>
+                        <span class="avatar">👤</span>
+                    </div>
+                    
+                    <div class="chat-message ai">
+                        <span class="avatar">🔒</span>
+                        <div class="message">É super simples! Abra o app SBlock, toque em "Assistência" e depois em "Guincho". Você pode acompanhar a chegada em tempo real!</div>
+                    </div>
+                </div>
+                
+                <a href="#chat" class="btn secondary">Fale com a BlockGuard</a>
+            </div>
+            
+            <div class="ai-image">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/robot-assistant-5665777-4721946.png" alt="BlockGuard AI Assistant">
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section id="cotacao" class="quote-section">
+        <div class="container">
+            <div class="quote-container">
+                <h2>Proteja o que importa em <span class="highlight">minutos</span></h2>
+                <p>Sem burocracia, sem complicação. Apenas segurança digital para sua vida.</p>
+                
+                <form class="quote-form">
+                    <div class="form-tabs">
+                        <button type="button" class="tab active">Seguro de Vida</button>
+                        <button type="button" class="tab">Seguro Auto</button>
+                    </div>
+                    
+                    <div class="form-fields">
+                        <div class="form-group">
+                            <input type="text" placeholder="Nome completo" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" placeholder="E-mail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="tel" placeholder="Telefone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <select required>
+                                <option value="" disabled selected>Selecione sua idade</option>
+                                <option>18-25 anos</option>
+                                <option>26-35 anos</option>
+                                <option>36-45 anos</option>
+                                <option>46+ anos</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn primary full-width">Receber cotação</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Preview -->
+    <section class="blog-preview" id="blog">
+        <div class="container">
+            <h2>Dicas de <span class="highlight">segurança</span></h2>
+            
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80')"></div>
+                    <div class="blog-content">
+                        <span class="tag">VIDA</span>
+                        <h3>5 hábitos que podem reduzir seu prêmio de seguro</h3>
+                        <p>Descubra como pequenas mudanças no seu estilo de vida podem...</p>
+                        <a href="#" class="read-more">Ler mais</a>
+                    </div>
+                </article>
+                
+                <article class="blog-card">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80')"></div>
+                    <div class="blog-content">
+                        <span class="tag">AUTO</span>
+                        <h3>Como a tecnologia está transformando o seguro auto</h3>
+                        <p>A era dos apps e sensores que monitoram seu carro em tempo real...</p>
+                        <a href="#" class="read-more">Ler mais</a>
+                    </div>
+                </article>
+                
+                <article class="blog-card">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80')"></div>
+                    <div class="blog-content">
+                        <span class="tag">DICAS</span>
+                        <h3>Seguro digital vs. tradicional: o que você precisa saber</h3>
+                        <p>Entenda as principais diferenças e por que a digitalização...</p>
+                        <a href="#" class="read-more">Ler mais</a>
+                    </div>
+                </article>
+            </div>
+            
+            <a href="#blog" class="btn secondary">Ver todos os artigos</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contato">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo-text" style="color: white;">
+                        <img src="branco.png" alt="SBlock Logo">
+                    </div>
+                    <p>Proteção digital para a nova geração</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Produtos</h4>
+                        <ul>
+                            <li><a href="#seguro-vida">Seguro de Vida</a></li>
+                            <li><a href="#seguro-carro">Seguro Auto</a></li>
+                            <li><a href="#">Combos</a></li>
+                            <li><a href="#">Para Empresas</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>Empresa</h4>
+                        <ul>
+                            <li><a href="#sobre">Sobre nós</a></li>
+                            <li><a href="#">Carreiras</a></li>
+                            <li><a href="#">Imprensa</a></li>
+                            <li><a href="#">Responsabilidade Social</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>Suporte</h4>
+                        <ul>
+                            <li><a href="#">Central de Ajuda</a></li>
+                            <li><a href="#">Fale com a BlockGuard</a></li>
+                            <li><a href="#">Acionar Seguro</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>Redes Sociais</h4>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2023 SBlock. Todos os direitos reservados.</p>
+                <p>Este é um site fictício, desenvolvido pelo <a href="https://profvitorhugo.online">Prof Vitor Hugo</a> para uma disciplina.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Chat Button -->
+    <div class="chat-button">
+        <i class="fas fa-comment"></i>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const header = document.getElementById('header');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            header.classList.toggle('mobile-menu-open');
+        });
+
+        // Form tabs
+        const tabs = document.querySelectorAll('.tab');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    header.classList.remove('mobile-menu-open');
+                }
+            });
+        });
+
+        // Testimonial slider auto-scroll
+        const testimonialSlider = document.querySelector('.testimonial-slider');
+        const testimonials = document.querySelectorAll('.testimonial');
+        
+        if (testimonials.length > 0) {
+            let currentIndex = 0;
+            const testimonialWidth = testimonials[0].offsetWidth + 30; // width + gap
+            
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % testimonials.length;
+                testimonialSlider.scrollTo({
+                    left: currentIndex * testimonialWidth,
+                    behavior: 'smooth'
+                });
+            }, 5000);
+        }
+
+        // Chat button animation
+        const chatButton = document.querySelector('.chat-button');
+        
+        chatButton.addEventListener('click', function() {
+            alert('BlockGuard: Olá! Como posso ajudar você hoje?');
+        });
+    </script>
+</body>
+</html>
