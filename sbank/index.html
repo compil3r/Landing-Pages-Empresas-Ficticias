@@ -1885,7 +1885,7 @@
           
           // Check if element exists and is in viewport
           if (parallaxSection && isInViewport(parallaxSection)) {
-              const yPos = scrollPosition * 0.5;
+              const yPos = scrollPosition * 0.05;
               parallaxSection.style.backgroundPosition = 'center ' + yPos + 'px';
           }
       });
